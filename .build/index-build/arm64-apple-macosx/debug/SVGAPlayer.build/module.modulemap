@@ -1,0 +1,4 @@
+module SVGAPlayer {
+    umbrella header "/Users/coderchan/Desktop/github/SVGAPlayer-iOS/Source/SVGAPlayer.h"
+    export *
+}

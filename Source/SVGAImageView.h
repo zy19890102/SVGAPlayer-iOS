@@ -13,4 +13,8 @@
 @property (nonatomic, assign) IBInspectable BOOL autoPlay;
 @property (nonatomic, strong) IBInspectable NSString *imageName;
 
+- (void)loadSvgWithURL:(NSURL *)url
+        completionBlock:(void (^)(SVGAVideoEntity * _Nullable))completionBlock
+          failureBlock:(void (^)(NSError * _Nullable))failureBlock;
+
 @end

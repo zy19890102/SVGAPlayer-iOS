@@ -1,0 +1,26 @@
+client:
+  name: basic
+  file-system: device-agnostic
+tools: {}
+targets:
+  "PackageStructure": ["<PackageStructure>"]
+  "SVGAPlayer-arm64-apple-macosx15.0-debug.module": ["<SVGAPlayer-arm64-apple-macosx15.0-debug.module>"]
+  "SVGAPlayerNoARC-arm64-apple-macosx15.0-debug.module": ["<SVGAPlayerNoARC-arm64-apple-macosx15.0-debug.module>"]
+  "main": []
+  "test": []
+default: "main"
+nodes:
+  "/Users/coderchan/Desktop/github/SVGAPlayer-iOS/NoARC/":
+    is-directory-structure: true
+    content-exclusion-patterns: [".git",".build"]
+  "/Users/coderchan/Desktop/github/SVGAPlayer-iOS/Source/":
+    is-directory-structure: true
+    content-exclusion-patterns: [".git",".build"]
+commands:
+  "PackageStructure":
+    tool: package-structure-tool
+    inputs: ["/Users/coderchan/Desktop/github/SVGAPlayer-iOS/NoARC/","/Users/coderchan/Desktop/github/SVGAPlayer-iOS/Source/","/Users/coderchan/Desktop/github/SVGAPlayer-iOS/Package.swift","/Users/coderchan/Desktop/github/SVGAPlayer-iOS/Package.resolved"]
+    outputs: ["<PackageStructure>"]
+    description: "Planning build"
+    allow-missing-inputs: true
+

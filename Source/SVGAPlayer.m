@@ -386,6 +386,9 @@
         if (delegate != nil && [delegate respondsToSelector:@selector(svgaPlayerDidFinishedAnimation:)]) {
             [delegate svgaPlayerDidFinishedAnimation:self];
         }
+        if (self.svgaFinishAnimation) {
+            self.svgaFinishAnimation(self);
+        }
         return;
     }
     [self update];

@@ -10,8 +10,15 @@
 
 @class SVGAVideoEntity;
 
+@interface SVGAParserLoadingManager : NSObject
+@end
+
+@interface SVGAParserLoadingBlock : NSObject
+@end
+
 @interface SVGAParser : NSObject
 
+@property (nonatomic, assign) BOOL checkURLChange;
 @property (nonatomic, assign) BOOL enabledMemoryCache;
 
 - (void)parseWithURL:(nonnull NSURL *)URL
@@ -31,5 +38,9 @@
               inBundle:(nullable NSBundle *)inBundle
        completionBlock:(void ( ^ _Nullable)(SVGAVideoEntity * _Nonnull videoItem))completionBlock
           failureBlock:(void ( ^ _Nullable)(NSError * _Nonnull error))failureBlock;
+
+-(void)loadingFinish:(NSString *)URL data:(NSData *)data response:(NSURLResponse *)response error:(NSError *)error completionBlock:(void (^)(SVGAVideoEntity * _Nullable))completionBlock failureBlock:(void (^)(NSError * _Nullable))failureBlock;
+
++(SVGAVideoEntity *)getCacheSVGAVideoEntitWithURL:(NSString *)url;
 
 @end

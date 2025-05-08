@@ -9,19 +9,38 @@
 #import "SVGAImageView.h"
 #import "SVGAParser.h"
 
-static SVGAParser *sharedParser;
+//static SVGAParser *sharedParser;
 
-@implementation SVGAImageView
+//@interface SVGAImageView ()
+//@property (nonatomic, strong) SVGAParser *sharedParser;
+//@end
 
-+ (void)load {
-    sharedParser = [SVGAParser new];
+@implementation SVGAImageView {
+    SVGAParser *sharedParser;
 }
+
+//+ (void)load {
+//    sharedParser = [SVGAParser new];
+//}
 
 - (instancetype)initWithCoder:(NSCoder *)coder
 {
     self = [super initWithCoder:coder];
     if (self) {
         _autoPlay = YES;
+        sharedParser = [SVGAParser new];
+        sharedParser.checkURLChange = YES;
+    }
+    return self;
+}
+
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        _autoPlay = YES;
+        sharedParser = [SVGAParser new];
+        sharedParser.checkURLChange = YES;
     }
     return self;
 }
@@ -29,21 +48,36 @@ static SVGAParser *sharedParser;
 - (void)setImageName:(NSString *)imageName {
     _imageName = imageName;
     if ([imageName hasPrefix:@"http://"] || [imageName hasPrefix:@"https://"]) {
-        [sharedParser parseWithURL:[NSURL URLWithString:imageName] completionBlock:^(SVGAVideoEntity * _Nullable videoItem) {
-            [self setVideoItem:videoItem];
-            if (self.autoPlay) {
-                [self startAnimation];
+        __weak SVGAImageView *weakSelf = self;
+        [self loadSvgWithURL:[NSURL URLWithString:imageName] completionBlock:^(SVGAVideoEntity * _Nullable videoItem) {
+            [weakSelf setVideoItem:videoItem];
+            if (weakSelf.autoPlay) {
+                [weakSelf startAnimation];
             }
         } failureBlock:nil];
     }
     else {
+        __weak SVGAImageView *weakSelf = self;
+
         [sharedParser parseWithNamed:imageName inBundle:nil completionBlock:^(SVGAVideoEntity * _Nonnull videoItem) {
-            [self setVideoItem:videoItem];
-            if (self.autoPlay) {
-                [self startAnimation];
+            [weakSelf setVideoItem:videoItem];
+            if (weakSelf.autoPlay) {
+                [weakSelf startAnimation];
             }
         } failureBlock:nil];
     }
+}
+
+- (void)loadSvgWithURL:(NSURL *)url
+        completionBlock:(void (^)(SVGAVideoEntity * _Nullable))completionBlock
+          failureBlock:(void (^)(NSError * _Nullable))failureBlock {
+    if (!url) {
+        if (failureBlock) {
+            failureBlock(nil);
+        }
+        return;
+    }
+    [sharedParser parseWithURL:url completionBlock:completionBlock failureBlock:failureBlock];
 }
 
 @end

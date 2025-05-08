@@ -34,6 +34,9 @@ typedef void(^SVGAPlayerDynamicDrawingBlock)(CALayer *contentLayer, NSInteger fr
 @property (nonatomic, copy) NSString *fillMode;
 @property (nonatomic, copy) NSRunLoopMode mainRunLoopMode;
 
+/// 代码历史原因需要在这里，迫不得已加入这个block，可以等以后优化代码时去除
+@property (nonatomic, copy) void (^svgaFinishAnimation) (SVGAPlayer *player);
+
 - (void)startAnimation;
 - (void)startAnimationWithRange:(NSRange)range reverse:(BOOL)reverse;
 - (void)pauseAnimation;

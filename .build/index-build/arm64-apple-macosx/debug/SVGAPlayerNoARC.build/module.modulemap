@@ -1,0 +1,4 @@
+module SVGAPlayerNoARC {
+    umbrella "/Users/coderchan/Desktop/github/SVGAPlayer-iOS/NoARC"
+    export *
+}
