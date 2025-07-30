@@ -1,4 +1,4 @@
-// swift-tools-version:5.5
+// swift-tools-version:5.10
 import PackageDescription
 
 let package = Package(
@@ -12,11 +12,15 @@ let package = Package(
             targets: ["SVGAPlayer"]),
     ],
     dependencies: [
+        .package(url: "https://github.com/ZipArchive/ZipArchive.git", exact: "2.4.3"),
+        .package(url: "https://github.com/apple/swift-protobuf.git", from: "1.30.0")
     ],
     targets: [
         .target(
             name: "SVGAPlayer",
-            dependencies: ["SVGAPlayerNoARC"],
+            dependencies: [
+                "SVGAPlayerNoARC"
+            ],
             path: "Source",
             publicHeadersPath: ".",
             cSettings: [
@@ -26,7 +30,10 @@ let package = Package(
         ),
         .target(
             name: "SVGAPlayerNoARC",
-            dependencies: [],
+            dependencies: [
+                .product(name: "SwiftProtobuf", package: "swift-protobuf"),
+                .product(name: "ZipArchive", package: "ZipArchive")
+            ],
             path: "NoARC",
             publicHeadersPath: ".",
             cSettings: [
