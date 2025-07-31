@@ -1,4 +1,4 @@
-// swift-tools-version:5.10
+// swift-tools-version:5.3
 import PackageDescription
 
 let package = Package(
@@ -12,7 +12,7 @@ let package = Package(
             targets: ["SVGAPlayer"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/ZipArchive/ZipArchive.git", exact: "2.4.3"),
+        .package(url: "https://github.com/ZipArchive/ZipArchive.git", from: "2.4.3"),
         .package(url: "https://github.com/apple/swift-protobuf.git", from: "1.30.0")
     ],
     targets: [
